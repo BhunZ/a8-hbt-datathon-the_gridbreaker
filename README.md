@@ -1,4 +1,4 @@
-# a8-hbt Datathon 2026 — THE GRIDBREAKER
+# Datathon 2026 — THE GRIDBREAKER
 
 > **Breaking Business Boundaries** — Pipeline phân tích dữ liệu và dự báo doanh thu cho thương hiệu thời trang Việt Nam.
 
