@@ -22,7 +22,7 @@ def nth_weekday_of_month(y,m,wd,n):
 
 sales   = pd.read_csv(RAW / "sales.csv",                  parse_dates=["Date"])
 traffic = pd.read_csv(RAW / "web_traffic.csv",            parse_dates=["date"])
-sample  = pd.read_csv(REFERENCE / "sample_submission.csv", parse_dates=["Date"])
+sample  = pd.read_csv(RAW / "sample_submission.csv", parse_dates=["Date"])
 
 daily_t = traffic.groupby("date").agg(
     sessions=("sessions","sum"), page_views=("page_views","sum"),
