@@ -1,5 +1,5 @@
 """v10c — final submission: BASE + named events + extended traffic.
-Keeps friend's 781k level (~$4.3M/day mean), adds event calendar signal and
+Adds event calendar signal and
 extra traffic channels, with multi-seed RF/ET for variance reduction.
 
 Written to fit/predict inside 45s. Two seeds, 400 trees each.
