@@ -66,6 +66,8 @@ git clone https://github.com/BhunZ/a8-hbt-datathon-the_gridbreaker
 cd a8-hbt-datathon-the_gridbreaker
 ```
 
+### Chạy model
+
 ```bash
 # Cài đặt Python dependencies
 pip install pandas numpy scikit-learn lightgbm matplotlib
