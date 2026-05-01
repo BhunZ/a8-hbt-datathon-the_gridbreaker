@@ -11,7 +11,7 @@
 | **Tung Lam Nguyen** | VKU |
 | **Quoc Hung Le** | VNU-HCM |
 | **Bao Hung Nguyen Duc** | HCMOU |
-| **Thanh Dat Hoang Ngoc** | Department of Finance, UEH University |
+| **Thanh Dat Hoang Ngoc** | UEH University |
 
 ---
 
@@ -41,35 +41,20 @@ Sau **17 phiên bản thử nghiệm**, phiên bản đơn giản nhất — V10
 
 ```
 .
-├── README.md                                ← bạn đang đọc
+├── README.md                                
 ├── reports/                                 Báo cáo 4 trang nộp Datathon
-│   ├── datathon_neurips_vi.pdf              ★ NeurIPS-style paper (Vietnamese)
-│   ├── datathon_neurips_vi.docx             Source DOCX (chỉnh sửa được)
-│   ├── datathon_report_vi.pdf               Báo cáo business 4-trang
-│   └── datathon_report_vi.docx
+│   ├── datathon_neurips.pdf              
+│   └── datathon_neurips.docx             
 │
 ├── notebooks/
-│   ├── datathon_pipeline_complete_vi.ipynb  ★ Notebook tổng hợp (tiếng Việt)
-│   ├── datathon_journey_vi.ipynb            Câu chuyện hành trình
-│   └── pipeline.ipynb                       Working pipeline
+│   └── datathon.ipynb            
 │
 ├── src/                                     Source code (Python)
 │   ├── paths.py                             Path config trung tâm
-│   ├── phase7_v10c_fit.py                   ★ V10c baseline (Kaggle 774k)
-│   ├── v13_*.py                             V13 architectural attempts
-│   ├── v14.py                               V14 multi-loss ensemble
+│   ├── v10c_fit.py                          ★ V10c baseline (Kaggle 774k)
 │   └── v10c_variants.py                     V10c hyperparameter variants
 │
-├── docs/                                    Documentation chi tiết
-│   ├── FINAL_RETROSPECTIVE.md               ★ Tổng kết 17 phiên bản
-│   ├── V13_BLUEPRINT.md                     V13 design document
-│   ├── v13_*_audit.md                       Per-step audit reports
-│   └── phase_summaries/
 │
-├── plans/                                   V11/V12/V13 planning docs
-├── submissions/                             Submission CSVs đã nộp Kaggle
-├── figures/                                 Plots / SHAP visualizations
-├── outputs/report_charts/                   Charts cho báo cáo
 └── data/                                    [GITIGNORED — competition data]
 ```
 
@@ -139,31 +124,6 @@ final.to_csv("submissions/submission_v10c_scaled_105.csv", index=False)
 - **Catalog Failures** (operational): tăng đột biến **17.6%** trong promo events
 - **Customer-driven**: không actionable
 
----
-
-## 📈 Bảng so sánh các phiên bản
-
-| Submission | Mean rev/day | Kaggle MAE | Δ vs V10c |
-|---|---:|---:|---:|
-| **V10c × 1.05** ★ | $4.44M | 772,912 | −1,986 |
-| V10c (baseline) | $4.23M | 774,898 | — |
-| V12c (40/60 blend) | $4.00M | 852,132 | +77,234 |
-| V12d | $3.96M | 871,299 | +96,401 |
-| V14 (multi-loss ensemble) | $3.47M | ~1,000,000 | +225,000 |
-| V13 final (post-cliff) | $3.32M | 1,187,779 | +412,881 |
-| V13 v10c only | $3.13M | 1,335,365 | +560,467 |
-
-**Pattern:** Mean prediction càng thấp → Kaggle MAE càng tệ (Pearson r = −0.95).
-
----
-
-## 💡 Bài học chính
-
-1. **Local validation ≠ Kaggle leaderboard.** Mirror block 2022 systematically misled — 2022 là năm thấp nhất post-cliff.
-2. **Mean prediction quan trọng ngang residual quality.** Cải tiến residual nhưng kéo mean xuống = thua.
-3. **Đôi khi mô hình đơn giản đã tối ưu.** V10c (23 features) đánh bại V13 (89 features) và V14 (multi-loss ensemble).
-4. **Post-hoc calibration đôi khi đủ.** ×1.05 đánh bại 14 attempt complex architecture redesign.
-5. **Trust the leaderboard, not your hypothesis.** Cliff 2019 là true insight nhưng act on it (cut training data) lại sai.
 
 ---
 
