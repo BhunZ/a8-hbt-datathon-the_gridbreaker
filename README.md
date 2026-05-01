@@ -60,15 +60,22 @@ Sau **17 phiên bản thử nghiệm**, phiên bản đơn giản nhất — V10
 
 ## 🚀 Cách reproduce kết quả
 
+### Clone repo
+```bash
+git clone https://github.com/BhunZ/a8-hbt-datathon-the_gridbreaker
+cd a8-hbt-datathon-the_gridbreaker
+```
+
 ```bash
 # Cài đặt Python dependencies
 pip install pandas numpy scikit-learn lightgbm matplotlib
 
-# Đặt 13 file CSV của competition vào data/raw/
+# Đặt 13 file CSV và sample_submission của competition vào data/raw/ 
 ls data/raw/
 # sales.csv  orders.csv  order_items.csv  payments.csv  customers.csv
 # products.csv  geography.csv  shipments.csv  reviews.csv  returns.csv
 # web_traffic.csv  inventory.csv  promotions.csv
+# sample_submission.csv
 
 # Chạy V10c baseline
 python src/v10c_fit.py
