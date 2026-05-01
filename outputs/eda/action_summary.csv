@@ -1,0 +1,6 @@
+action,n_skus,revenue_per_year,true_profit_per_year,avg_margin_after_returns,margin_per_action,revenue_per_year_M,profit_per_year_M
+DELIST,475,497847592.68,-40732558.2,-0.1,-8.2,497.8,-40.7
+FIX SIZING / QC,195,33366441.27,7153656.21,0.18,21.4,33.4,7.2
+KEEP (Hold),454,180516457.49,19167209.39,0.16,10.6,180.5,19.2
+PROMOTE (Star),303,399017592.03,115712396.09,0.29,29.0,399.0,115.7
+REPRICE / discount-cap,154,227539593.6,2364155.26,0.01,1.0,227.5,2.4

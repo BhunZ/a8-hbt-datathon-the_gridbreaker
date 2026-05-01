@@ -1,0 +1,30 @@
+check_id,pk_columns,rows,duplicate_count,verdict,kind,child_unique_keys,orphan_count,orphan_pct,sample_orphans
+PK_customers,['customer_id'],121930.0,0.0,PASS,PK,,,,
+PK_products,['product_id'],2412.0,0.0,PASS,PK,,,,
+PK_promotions,['promo_id'],50.0,0.0,PASS,PK,,,,
+PK_geography,['zip'],39948.0,0.0,PASS,PK,,,,
+PK_orders,['order_id'],646945.0,0.0,PASS,PK,,,,
+PK_payments,['order_id'],646945.0,0.0,PASS,PK,,,,
+PK_shipments,['order_id'],566067.0,0.0,PASS,PK,,,,
+PK_returns,['return_id'],39939.0,0.0,PASS,PK,,,,
+PK_reviews,['review_id'],113551.0,0.0,PASS,PK,,,,
+CAND_order_items_oid_pid,"['order_id', 'product_id']",714669.0,16.0,FAIL,PK,,,,
+PK_inventory_pm,"['product_id', 'year', 'month']",60247.0,0.0,PASS,PK,,,,
+PK_sales_date,['Date'],3833.0,0.0,PASS,PK,,,,
+PK_submission_date,['Date'],548.0,0.0,PASS,PK,,,,
+PK_web_traffic_date,['date'],3652.0,0.0,PASS,PK,,,,
+FK_customers_zip,,,,PASS,FK,31491.0,0.0,0.0,[]
+FK_orders_customer,,,,PASS,FK,90246.0,0.0,0.0,[]
+FK_orders_zip,,,,PASS,FK,29932.0,0.0,0.0,[]
+FK_order_items_order,,,,PASS,FK,646945.0,0.0,0.0,[]
+FK_order_items_product,,,,PASS,FK,1598.0,0.0,0.0,[]
+FK_order_items_promo,,,,PASS,FK,50.0,0.0,0.0,[]
+FK_order_items_promo2,,,,PASS,FK,2.0,0.0,0.0,[]
+FK_payments_order,,,,PASS,FK,646945.0,0.0,0.0,[]
+FK_shipments_order,,,,PASS,FK,566067.0,0.0,0.0,[]
+FK_returns_order,,,,PASS,FK,36062.0,0.0,0.0,[]
+FK_returns_product,,,,PASS,FK,1286.0,0.0,0.0,[]
+FK_reviews_order,,,,PASS,FK,111369.0,0.0,0.0,[]
+FK_reviews_product,,,,PASS,FK,1412.0,0.0,0.0,[]
+FK_reviews_customer,,,,PASS,FK,48676.0,0.0,0.0,[]
+FK_inventory_product,,,,PASS,FK,1624.0,0.0,0.0,[]

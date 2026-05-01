@@ -1,0 +1,20 @@
+{
+  "n_returns": 39937,
+  "n_reviews": 113551,
+  "n_intersection": 0,
+  "n_only_returns": 39937,
+  "n_only_reviews": 113551,
+  "n_union": 153488,
+  "pct_returned_reviewed": 0.0,
+  "pct_reviewed_returned": 0.0,
+  "inter_has_low": 0,
+  "inter_has_low_pct": NaN,
+  "inter_has_high": 0,
+  "inter_has_high_pct": NaN,
+  "inter_avg_rating": NaN,
+  "baseline_has_low_pct": 13.09,
+  "baseline_has_high_pct": 71.92,
+  "baseline_avg_rating": 3.936,
+  "inter_phys_and_low": 0,
+  "inter_cat_and_low": 0
+}

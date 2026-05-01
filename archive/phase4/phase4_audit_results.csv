@@ -1,0 +1,16 @@
+rule_id,metric,threshold,verdict,detail,phase
+P4_PK1,0,= 0,PASS,df_txn.line_item_id must be unique (1 row per order_items line),4
+P4_CT1,714669,"= 714,669",PASS,No fan-out from LEFT joins — df_txn row count must equal order_items row count,4
+P4_FK1,0,= 0,PASS,customer_id must not be null after LEFT JOIN chain,4
+P4_FK2,0,= 0,PASS,order_date must not be null after LEFT JOIN chain,4
+P4_FK3,0,= 0,PASS,order_status must not be null after LEFT JOIN chain,4
+P4_FK4,0,= 0,PASS,product_list_price must not be null after LEFT JOIN chain,4
+P4_FK5,0,= 0,PASS,category must not be null after LEFT JOIN chain,4
+P4_C1,-0.0,= 0 (±$0.01),PASS,Σ quantity × unit_price across df_txn must match Σ sales.Revenue,4
+P4_T1,564,"= 564 (matches Phase 2 B10, order-distinct)",PASS,Distinct order_ids with truncation_flag_shipment=1 (633 line rows),4
+P4_T2,80,"= 80 (matches Phase 2 B11, order-distinct)",PASS,Distinct order_ids with truncation_flag_return=1,4
+P4_B10,0,= 0 (Phase 3C cross-check),PASS,reviews and returns are disjoint in this dataset — no line can be both,4
+P4_D1,"{'no_feedback': 561177, 'reviewed_only': 113553, 'returned_only': 39939}",LOG,LOG,distribution of post_purchase_outcome over df_txn,4
+P4_D2,"{'avg_rating': np.float64(84.11), 'dominant_rating': np.float64(84.11), 'refund_over_paid_ratio': np.float64(94.41), 'dominant_return_reason': np.float64(94.41), 'delivery_date': np.float64(12.49), 'promo_id': np.float64(61.34)}",LOG,LOG,% nulls on satellite / optional columns (context for Phase 5 imputation plan),4
+P4_D3,"{0.01: 0.0, 0.25: 327.0, 0.5: 1082.0, 0.75: 1920.0, 0.95: 3193.0, 0.99: 3587.0}",LOG,LOG,customer_tenure_days percentiles (anchor = min(order_date) per customer),4
+P4_D4,"{'rows': 714669, 'cols': 64}",LOG,LOG,final df_txn shape,4

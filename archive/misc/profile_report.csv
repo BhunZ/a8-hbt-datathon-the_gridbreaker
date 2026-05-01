@@ -1,0 +1,97 @@
+table,column,dtype,n_null,pct_null,n_unique,min,max
+customers,customer_id,int32,0,0.0,121930,1,157563
+customers,zip,int32,0,0.0,31491,1001,99950
+customers,city,string,0,0.0,42,,
+customers,signup_date,datetime64[ns],0,0.0,3941,2012-01-17 00:00:00,2022-12-31 00:00:00
+customers,gender,category,0,0.0,3,,
+customers,age_group,category,0,0.0,5,,
+customers,acquisition_channel,category,0,0.0,6,,
+geography,zip,int32,0,0.0,39948,1.0,99950.0
+geography,city,string,0,0.0,42,,
+geography,region,category,0,0.0,3,,
+geography,district,string,0,0.0,39,,
+inventory,snapshot_date,datetime64[ns],0,0.0,126,2012-07-31 00:00:00,2022-12-31 00:00:00
+inventory,product_id,int32,0,0.0,1624,1,2412
+inventory,stock_on_hand,int32,0,0.0,1895,3,2673
+inventory,units_received,int32,0,0.0,360,1,817
+inventory,units_sold,int32,0,0.0,303,1,670
+inventory,stockout_days,int16,0,0.0,29,0,28
+inventory,days_of_supply,float64,0,0.0,9289,5.2,68100.0
+inventory,fill_rate,float64,0,0.0,29,0.0667,1.0
+inventory,stockout_flag,int8,0,0.0,2,0,1
+inventory,overstock_flag,int8,0,0.0,2,0,1
+inventory,reorder_flag,int8,0,0.0,1,0,0
+inventory,sell_through_rate,float64,0,0.0,4017,0.0004,0.8531
+inventory,product_name,string,0,0.0,1465,,
+inventory,category,category,0,0.0,4,,
+inventory,segment,category,0,0.0,8,,
+inventory,year,int16,0,0.0,11,2012,2022
+inventory,month,int8,0,0.0,12,1,12
+order_items,order_id,int32,0,0.0,646945,1.0,834397.0
+order_items,product_id,int32,0,0.0,1598,1.0,2412.0
+order_items,quantity,int16,0,0.0,8,1.0,8.0
+order_items,unit_price,float64,0,0.0,501330,392.57,43056.0
+order_items,discount_amount,float64,0,0.0,204449,0.0,35235.47
+order_items,promo_id,string,438353,61.337,50,,
+order_items,promo_id_2,string,714463,99.971,2,,
+orders,order_id,int32,0,0.0,646945,1,834397
+orders,order_date,datetime64[ns],0,0.0,3833,2012-07-04 00:00:00,2022-12-31 00:00:00
+orders,customer_id,int32,0,0.0,90246,1,157563
+orders,zip,int32,0,0.0,29932,1001,99950
+orders,order_status,category,0,0.0,6,,
+orders,payment_method,category,0,0.0,5,,
+orders,device_type,category,0,0.0,3,,
+orders,order_source,category,0,0.0,6,,
+payments,order_id,int32,0,0.0,646945,1.0,834397.0
+payments,payment_method,category,0,0.0,5,,
+payments,payment_value,float64,0,0.0,595420,389.74,331570.4
+payments,installments,int8,0,0.0,5,1.0,12.0
+products,product_id,int32,0,0.0,2412,1.0,2412.0
+products,product_name,string,0,0.0,2172,,
+products,category,category,0,0.0,4,,
+products,segment,category,0,0.0,8,,
+products,size,category,0,0.0,4,,
+products,color,category,0,0.0,10,,
+products,price,float64,0,0.0,1990,9.056593572436444,40950.0
+products,cogs,float64,0,0.0,2381,5.183828982020106,38902.5
+promotions,promo_id,string,0,0.0,50,,
+promotions,promo_name,string,0,0.0,50,,
+promotions,promo_type,category,0,0.0,2,,
+promotions,discount_value,float64,0,0.0,6,10.0,50.0
+promotions,start_date,datetime64[ns],0,0.0,50,2013-01-31 00:00:00,2022-11-18 00:00:00
+promotions,end_date,datetime64[ns],0,0.0,50,2013-03-01 00:00:00,2022-12-31 00:00:00
+promotions,applicable_category,category,40,80.0,2,,
+promotions,promo_channel,category,0,0.0,5,,
+promotions,stackable_flag,int8,0,0.0,2,0,1
+promotions,min_order_value,float64,0,0.0,5,0.0,200000.0
+returns,return_id,string,0,0.0,39939,,
+returns,order_id,int32,0,0.0,36062,2,833351
+returns,product_id,int32,0,0.0,1286,3,2412
+returns,return_date,datetime64[ns],0,0.0,3806,2012-07-11 00:00:00,2022-12-31 00:00:00
+returns,return_reason,category,0,0.0,5,,
+returns,return_quantity,int16,0,0.0,8,1,8
+returns,refund_amount,float64,0,0.0,39560,458.81,160937.94
+reviews,review_id,string,0,0.0,113551,,
+reviews,order_id,int32,0,0.0,111369,1,833296
+reviews,product_id,int32,0,0.0,1412,3,2412
+reviews,customer_id,int32,0,0.0,48676,2,157563
+reviews,review_date,datetime64[ns],0,0.0,3825,2012-07-10 00:00:00,2022-12-31 00:00:00
+reviews,rating,int8,0,0.0,5,1,5
+reviews,review_title,string,0,0.0,18,,
+sales,Date,datetime64[ns],0,0.0,3833,2012-07-04 00:00:00,2022-12-31 00:00:00
+sales,Revenue,float64,0,0.0,3833,279813.94,20905271.35
+sales,COGS,float64,0,0.0,3833,236576.31,16535857.67
+sample_submission,Date,datetime64[ns],0,0.0,548,2023-01-01 00:00:00,2024-07-01 00:00:00
+sample_submission,Revenue,float64,0,0.0,548,977332.85,9283416.97
+sample_submission,COGS,float64,0,0.0,548,790258.95,8341542.36
+shipments,order_id,int32,0,0.0,566067,1,834325
+shipments,ship_date,datetime64[ns],0,0.0,3831,2012-07-04 00:00:00,2022-12-29 00:00:00
+shipments,delivery_date,datetime64[ns],0,0.0,3831,2012-07-06 00:00:00,2022-12-31 00:00:00
+shipments,shipping_fee,float64,0,0.0,1856,0.0,32.0
+web_traffic,date,datetime64[ns],0,0.0,3652,2013-01-01 00:00:00,2022-12-31 00:00:00
+web_traffic,sessions,int32,0,0.0,3447,7973,50947
+web_traffic,unique_visitors,int32,0,0.0,3382,6136,40430
+web_traffic,page_views,int32,0,0.0,3620,30451,275560
+web_traffic,bounce_rate,float64,0,0.0,261,0.0032,0.0058
+web_traffic,avg_session_duration_sec,float64,0,0.0,1771,100.1,319.9
+web_traffic,traffic_source,category,0,0.0,6,,

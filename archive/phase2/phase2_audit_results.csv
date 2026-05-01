@@ -1,0 +1,23 @@
+rule_id,metric,threshold,verdict,detail,sample_violators
+B1,0,= 0,PASS,products.cogs must be strictly less than products.price,[]
+B2_quantity,0,= 0,PASS,order_items.quantity must be > 0,[]
+B2_unit_price,0,= 0,PASS,order_items.unit_price must be > 0,[]
+B3,0,= 0,PASS,"reviews.rating must be in {1,2,3,4,5}",[]
+B4,0,= 0,PASS,shipments.ship_date must be >= orders.order_date,[]
+B5,0,= 0,PASS,shipments.delivery_date must be >= shipments.ship_date,[]
+B6,0,= 0,PASS,returns.return_date must be >= shipments.delivery_date,[]
+B7,206,LOG (spec says FAIL but data is systematic — see unit_price_formula.md),LOG,promo_id_2 references non-stackable promos; pattern is systematic (206 rows).,"['PROMO-0015', 'PROMO-0025']"
+B8,0,= 0,PASS,order_date must fall within the promo's active window,[]
+B9,0,= 0,PASS,"When promo.applicable_category is set, product.category must match",[]
+B10_has_ship,564,= 0,FAIL,"order_status ∈ {shipped,delivered,returned} must have exactly one shipment row","[{'order_id': 832884, 'order_status': 'delivered', 'n_ship': 0.0}, {'order_id': 832929, 'order_status': 'shipped', 'n_ship': 0.0}, {'order_id': 832955, 'order_status': 'delivered', 'n_ship': 0.0}, {'order_id': 832978, 'order_status': 'delivered', 'n_ship': 0.0}, {'order_id': 833043, 'order_status': 'delivered', 'n_ship': 0.0}]"
+B10_no_ship,0,= 0,PASS,Other order_status values must have zero shipment rows,[]
+B11,80,= 0,FAIL,order_status=returned must have >=1 returns row,"[{'order_id': 831459, 'order_status': 'returned', 'n_ret': 0.0}, {'order_id': 831517, 'order_status': 'returned', 'n_ret': 0.0}, {'order_id': 831579, 'order_status': 'returned', 'n_ret': 0.0}, {'order_id': 831770, 'order_status': 'returned', 'n_ret': 0.0}, {'order_id': 831787, 'order_status': 'returned', 'n_ret': 0.0}]"
+B12,0,= 0,PASS,reviews.review_date must be >= orders.order_date,[]
+B13,80623,= 0,FAIL,customers.signup_date must be <= first orders.order_date,"[{'customer_id': 1, 'signup_date': Timestamp('2021-12-30 00:00:00'), 'first_order_date': Timestamp('2012-07-25 00:00:00')}, {'customer_id': 2, 'signup_date': Timestamp('2013-12-27 00:00:00'), 'first_order_date': Timestamp('2013-09-20 00:00:00')}, {'customer_id': 3, 'signup_date': Timestamp('2018-07-24 00:00:00'), 'first_order_date': Timestamp('2012-08-27 00:00:00')}, {'customer_id': 5, 'signup_date': Timestamp('2022-09-23 00:00:00'), 'first_order_date': Timestamp('2012-08-09 00:00:00')}, {'customer_id': 6, 'signup_date': Timestamp('2022-04-14 00:00:00'), 'first_order_date': Timestamp('2012-10-28 00:00:00')}]"
+B14,0,= 0,PASS,returns.refund_amount must be <= return_quantity * unit_price (±$0.01 tol),[]
+B15,0,= 0 (tol ±$0.02),PASS,"discount_amount formula (hybrid: flat-per-unit for fixed, pct-of-charged for percentage, +$50 flat on stacked).",[]
+G_CHK1,1,constant rows/date,PASS,web_traffic has 1 distinct row-per-date counts; min=1 max=1 constant=1,"[(1, 3652)]"
+G_CHK2,0,= 0,PASS,inventory.snapshot_date must be the last calendar day of its month,[]
+G_CHK3,0,= 0,PASS,"sales.csv must cover 2012-07-04..2022-12-31 with no gaps (expected=3833, actual=3833)",[]
+G_CHK4,0,= 0,PASS,sales.csv must have exactly one row per Date,[]
+G_CHK5,181,LOG (G13),WARN,web_traffic missing coverage vs sales.csv spine (Gap G13),"[Timestamp('2012-07-04 00:00:00'), Timestamp('2012-07-05 00:00:00'), Timestamp('2012-07-06 00:00:00'), Timestamp('2012-07-07 00:00:00'), Timestamp('2012-07-08 00:00:00')]"

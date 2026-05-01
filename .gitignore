@@ -1,0 +1,68 @@
+# ============================================================
+# .gitignore — a8-hbt Datathon 2026 — THE GRIDBREAKER
+# ============================================================
+
+# --- Competition raw data (DO NOT redistribute) ---
+data/raw/
+data/processed/
+data/reference/sample_submission.csv
+!data/reference/schema_diagram.mermaid
+!data/reference/.gitkeep
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# --- Node / npm ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Build artifacts (keep DOCX/PDF in reports/, not outputs/) ---
+outputs/preview*.jpg
+outputs/preview*.png
+outputs/datathon_*.docx
+outputs/datathon_*.pdf
+tmp_docx/
+*.log
+
+# --- Local testing leftovers (from automation) ---
+datathon-repo-export/
+datathon-repo.bundle
+*.bundle
+
+# --- Large model artifacts ---
+*.pkl
+*.joblib
+*.h5
+*.parquet
+
+# --- But KEEP these ---
+!figures/*.png
+!outputs/report_charts/*.png
+!reports/*.pdf
+!reports/*.docx
+!notebooks/*.ipynb
+!submissions/submission_v10c.csv
+!submissions/submission_v10c_scaled_105.csv
+!submissions/submission_v10c_scaled_110.csv
+!submissions/submission_v10c_scaled_114.csv

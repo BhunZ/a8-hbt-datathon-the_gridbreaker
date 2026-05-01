@@ -1,0 +1,185 @@
+# a8-hbt Datathon 2026 — THE GRIDBREAKER
+
+> **Breaking Business Boundaries** — Pipeline phân tích dữ liệu và dự báo doanh thu cho thương hiệu thời trang Việt Nam.
+
+---
+
+## 👥 Team a8-hbt
+
+| Name | Affiliation |
+|---|---|
+| **Tung Lam Nguyen** | VKU |
+| **Quoc Hung Le** | VNU-HCM |
+| **Bao Hung Nguyen Duc** | HCMOU |
+| **Thanh Dat Hoang Ngoc** | Department of Finance, UEH University |
+
+---
+
+## 📊 Bài toán
+
+- **Đầu vào:** 13 file CSV (10.5 năm hoạt động, 2012–2022, tổng doanh thu lịch sử **$16.43B**).
+- **Đầu ra:** Dự báo Revenue và COGS hàng ngày cho **548 ngày** (2023-01-01 → 2024-07-01).
+- **Đánh giá:** MAE trên public leaderboard, MAE + RMSE + R² trên private leaderboard.
+- **Ràng buộc:** Chỉ được dùng dữ liệu trong `data/raw/`. Không được dùng dữ liệu ngoài.
+
+---
+
+## 🏆 Kết quả cuối
+
+| Submission | Mean rev/day | Kaggle MAE |
+|---|---:|---:|
+| V10c (baseline ensemble) | $4.23M | 774,898 |
+| **V10c × 1.05 (final)** | **$4.44M** | **772,912** ★ |
+
+**Submission cuối nộp:** [`submissions/submission_v10c_scaled_105.csv`](submissions/submission_v10c_scaled_105.csv)
+
+Sau **17 phiên bản thử nghiệm**, phiên bản đơn giản nhất — V10c (RF + ET + HGB ensemble) với hệ số calibration 1.05 — đạt MAE thấp nhất. Mọi phiên bản phức tạp hơn (V11–V14 với multi-loss ensemble, deep architecture, post-cliff training cut) đều thua V10c trên public leaderboard.
+
+---
+
+## 📁 Cấu trúc repo
+
+```
+.
+├── README.md                                ← bạn đang đọc
+├── reports/                                 Báo cáo 4 trang nộp Datathon
+│   ├── datathon_neurips_vi.pdf              ★ NeurIPS-style paper (Vietnamese)
+│   ├── datathon_neurips_vi.docx             Source DOCX (chỉnh sửa được)
+│   ├── datathon_report_vi.pdf               Báo cáo business 4-trang
+│   └── datathon_report_vi.docx
+│
+├── notebooks/
+│   ├── datathon_pipeline_complete_vi.ipynb  ★ Notebook tổng hợp (tiếng Việt)
+│   ├── datathon_journey_vi.ipynb            Câu chuyện hành trình
+│   └── pipeline.ipynb                       Working pipeline
+│
+├── src/                                     Source code (Python)
+│   ├── paths.py                             Path config trung tâm
+│   ├── phase7_v10c_fit.py                   ★ V10c baseline (Kaggle 774k)
+│   ├── v13_*.py                             V13 architectural attempts
+│   ├── v14.py                               V14 multi-loss ensemble
+│   └── v10c_variants.py                     V10c hyperparameter variants
+│
+├── docs/                                    Documentation chi tiết
+│   ├── FINAL_RETROSPECTIVE.md               ★ Tổng kết 17 phiên bản
+│   ├── V13_BLUEPRINT.md                     V13 design document
+│   ├── v13_*_audit.md                       Per-step audit reports
+│   └── phase_summaries/
+│
+├── plans/                                   V11/V12/V13 planning docs
+├── submissions/                             Submission CSVs đã nộp Kaggle
+├── figures/                                 Plots / SHAP visualizations
+├── outputs/report_charts/                   Charts cho báo cáo
+└── data/                                    [GITIGNORED — competition data]
+```
+
+---
+
+## 🚀 Cách reproduce kết quả
+
+```bash
+# Cài đặt Python dependencies
+pip install pandas numpy scikit-learn lightgbm matplotlib
+
+# Đặt 13 file CSV của competition vào data/raw/
+ls data/raw/
+# sales.csv  orders.csv  order_items.csv  payments.csv  customers.csv
+# products.csv  geography.csv  shipments.csv  reviews.csv  returns.csv
+# web_traffic.csv  inventory.csv  promotions.csv
+
+# Chạy V10c baseline
+python src/phase7_v10c_fit.py
+# Output: submissions/submission_v10c.csv (Kaggle MAE 774,898)
+```
+
+### Áp dụng calibration × 1.05 (final winner)
+
+```python
+import pandas as pd
+import numpy as np
+
+v10c = pd.read_csv("submissions/submission_v10c.csv", parse_dates=["Date"])
+final = pd.DataFrame({
+    "Date":    v10c.Date.dt.strftime("%Y-%m-%d"),
+    "Revenue": np.round(v10c.Revenue * 1.05, 2),
+    "COGS":    np.round(v10c.COGS    * 1.05, 2),
+})
+final.to_csv("submissions/submission_v10c_scaled_105.csv", index=False)
+# Kaggle MAE: 772,912 (best)
+```
+
+---
+
+## 🔍 Các phát hiện EDA chính
+
+### 1. Vực thẳm 2019 — Doanh thu giảm 40%
+- **Trước:** Orders ~5,800/ngày, Revenue ~$5M/ngày
+- **Sau (mid-2019):** Orders ~3,500/ngày, Revenue ~$3M/ngày
+- **Đặc điểm:** Conversion crash (traffic + signups vẫn tăng 6-15%, AOV stable)
+
+### 2. Lỗ hổng dữ liệu vận chuyển cuối kỳ 2022
+- Bảng `shipments` và `returns` chỉ phủ ~63% các đơn hàng trong tháng 11/2022
+- Đây là data truncation, không phải tín hiệu kinh doanh
+- **Cách xử lý:** Flag `is_sparse_period`, không xóa data
+
+### 3. The Zero-Overlap Paradox (Returns ⊥ Reviews)
+- 36,062 đơn có return, 111,369 đơn có review
+- **Tập giao = 0** (không một đơn nào có cả hai)
+- **3 phân đoạn khách hàng:**
+  - **Silent Churners** (5.6%): trả hàng, không review
+  - **Vocal Advocates** (15.9%): review, không trả hàng
+  - **Passive Majority** (78.5%): không phản hồi
+
+### 4. Pricing Dynamics: 2% Gaussian noise
+- Trên 438k line items không discount, lệch giá so với catalog có std = 2.0%
+- **Diễn giải:** Intra-day Pricing Dispersion — brand đang chạy dynamic pricing engine ngầm
+
+### 5. Tiered Defect Analysis
+- **Physical Defects** (chất lượng sản phẩm): cần QC supplier
+- **Catalog Failures** (operational): tăng đột biến **17.6%** trong promo events
+- **Customer-driven**: không actionable
+
+---
+
+## 📈 Bảng so sánh các phiên bản
+
+| Submission | Mean rev/day | Kaggle MAE | Δ vs V10c |
+|---|---:|---:|---:|
+| **V10c × 1.05** ★ | $4.44M | 772,912 | −1,986 |
+| V10c (baseline) | $4.23M | 774,898 | — |
+| V12c (40/60 blend) | $4.00M | 852,132 | +77,234 |
+| V12d | $3.96M | 871,299 | +96,401 |
+| V14 (multi-loss ensemble) | $3.47M | ~1,000,000 | +225,000 |
+| V13 final (post-cliff) | $3.32M | 1,187,779 | +412,881 |
+| V13 v10c only | $3.13M | 1,335,365 | +560,467 |
+
+**Pattern:** Mean prediction càng thấp → Kaggle MAE càng tệ (Pearson r = −0.95).
+
+---
+
+## 💡 Bài học chính
+
+1. **Local validation ≠ Kaggle leaderboard.** Mirror block 2022 systematically misled — 2022 là năm thấp nhất post-cliff.
+2. **Mean prediction quan trọng ngang residual quality.** Cải tiến residual nhưng kéo mean xuống = thua.
+3. **Đôi khi mô hình đơn giản đã tối ưu.** V10c (23 features) đánh bại V13 (89 features) và V14 (multi-loss ensemble).
+4. **Post-hoc calibration đôi khi đủ.** ×1.05 đánh bại 14 attempt complex architecture redesign.
+5. **Trust the leaderboard, not your hypothesis.** Cliff 2019 là true insight nhưng act on it (cut training data) lại sai.
+
+---
+
+## 📄 Báo cáo
+
+- **NeurIPS-style 4-page paper (Vietnamese):** [`reports/datathon_neurips_vi.pdf`](reports/datathon_neurips_vi.pdf)
+- **Business report 4-page (Vietnamese):** [`reports/datathon_report_vi.pdf`](reports/datathon_report_vi.pdf)
+- **Comprehensive notebook (Vietnamese):** [`notebooks/datathon_pipeline_complete_vi.ipynb`](notebooks/datathon_pipeline_complete_vi.ipynb)
+- **Final retrospective (English):** [`docs/FINAL_RETROSPECTIVE.md`](docs/FINAL_RETROSPECTIVE.md)
+
+---
+
+## 🏷️ Project tags
+
+`datathon-2026` `revenue-forecasting` `time-series` `vietnamese-ecommerce` `ensemble-learning` `post-hoc-calibration` `eda` `vinuniversity-vintelligence`
+
+---
+
+*Pipeline này là kết quả của 17 lần lặp với rất nhiều thất bại. "Sometimes the right call is to recognize when more iteration is hurting, not helping."*

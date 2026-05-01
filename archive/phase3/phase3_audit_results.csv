@@ -1,0 +1,19 @@
+rule_id,metric,threshold,verdict,detail,phase
+P3_PK1,0,= 0,PASS,"returns_agg is unique on (order_id, product_id)",3A
+P3_FK1,0,= 0,PASS,returns_agg keys must be a subset of order_items keys,3A
+P3_C1,0,= 0,PASS,Σ returns_agg.return_quantity_sum == Σ returns.return_quantity,3A
+P3_C2,0.0,= 0 (±$0.01),PASS,Σ returns_agg.refund_amount_sum == Σ returns.refund_amount,3A
+P3_B14,0,= 0,PASS,refund_amount_sum must not exceed return_quantity_sum × unit_price,3A
+P3_B6,0,= 0,PASS,first_return_date must be >= shipments.delivery_date,3A
+P3_D1,5.588,LOG,LOG,returns_agg touches 5.588% of distinct order_items line keys,3A
+P3_D4,"{1: 39935, 2: 2}",LOG,LOG,n_return_events distribution (expect heavy modal=1),3A
+P3_D5,80,= 80 (matches Phase 2 B11),PASS,Count of 'returned'-status orders missing from returns table,3A
+P3B_PK1,0,= 0,PASS,"reviews_agg is unique on (order_id, product_id)",3B
+P3B_FK1,0,= 0,PASS,reviews_agg keys must be a subset of order_items keys,3B
+P3B_C1,0,= 0,PASS,Σ reviews_agg.n_review_events == len(reviews),3B
+P3B_B3,[1..5],⊆ [1..5],PASS,"aggregate min_rating and max_rating must be within [1, 5]",3B
+P3B_B6,0,= 0,PASS,first_review_date must be >= orders.order_date (no retro-reviews),3B
+P3B_D1,15.889,LOG,LOG,reviews_agg touches 15.889% of distinct order_items line keys,3B
+P3B_D2,"{1: 5772, 2: 9095, 3: 17016, 4: 36412, 5: 45256}",LOG,LOG,dominant_rating distribution across agg lines,3B
+P3B_D3,"{0.01: 5.0, 0.25: 14.0, 0.5: 21.0, 0.75: 29.0, 0.95: 35.0, 0.99: 38.0}",LOG,LOG,"time_to_first_review_days percentiles (expect min≈5, p99≈38)",3B
+P3B_D4,{1: 113551},{1: N},PASS,n_review_events expected ≡ 1 since source table is already PK-unique,3B
