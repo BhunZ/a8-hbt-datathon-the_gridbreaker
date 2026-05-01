@@ -52,8 +52,6 @@ Sau **17 phiên bản thử nghiệm**, phiên bản đơn giản nhất — V10
 ├── src/                                     Source code (Python)
 │   ├── paths.py                             Path config trung tâm
 │   ├── v10c_fit.py                          ★ V10c baseline (Kaggle 774k)
-│   └── v10c_variants.py                     V10c hyperparameter variants
-│
 │
 └── data/                                    [GITIGNORED — competition data]
 ```
@@ -123,16 +121,6 @@ final.to_csv("submissions/submission_v10c_scaled_105.csv", index=False)
 - **Physical Defects** (chất lượng sản phẩm): cần QC supplier
 - **Catalog Failures** (operational): tăng đột biến **17.6%** trong promo events
 - **Customer-driven**: không actionable
-
-
----
-
-## 📄 Báo cáo
-
-- **NeurIPS-style 4-page paper (Vietnamese):** [`reports/datathon_neurips_vi.pdf`](reports/datathon_neurips_vi.pdf)
-- **Business report 4-page (Vietnamese):** [`reports/datathon_report_vi.pdf`](reports/datathon_report_vi.pdf)
-- **Comprehensive notebook (Vietnamese):** [`notebooks/datathon_pipeline_complete_vi.ipynb`](notebooks/datathon_pipeline_complete_vi.ipynb)
-- **Final retrospective (English):** [`docs/FINAL_RETROSPECTIVE.md`](docs/FINAL_RETROSPECTIVE.md)
 
 ---
 
