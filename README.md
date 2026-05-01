@@ -71,7 +71,7 @@ ls data/raw/
 # web_traffic.csv  inventory.csv  promotions.csv
 
 # Chạy V10c baseline
-python src/phase7_v10c_fit.py
+python src/v10c_fit.py
 # Output: submissions/submission_v10c.csv (Kaggle MAE 774,898)
 ```
 
