@@ -1,5 +1,0 @@
-quadrant,n_skus,total_revenue,total_gross_profit,total_refund,avg_return_rate,avg_rating,realised_margin,true_margin_after_returns
-DOG (Lo$ Hi-Ret),324,311199386.26,42953387.765,17966931.66,0.07,3.932,13.8,8.0
-NICHE (Lo$ Lo-Ret),373,330874345.41,37108885.915,5866966.22,0.014,3.947,11.2,9.4
-STAR (Hi$ Lo-Ret),324,5557929468.56,682481897.589,172650498.64,0.029,3.919,12.3,9.2
-TOXIC (Hi$ Hi-Ret),373,7843291114.94,597597859.354,313720277.69,0.045,3.93,7.6,3.6
